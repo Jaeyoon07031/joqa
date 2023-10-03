@@ -3,90 +3,88 @@ package org.asterisk;
 import java.io.*;
 import java.util.*;
 import org.json.simple.*;
+import org.json.simple.parser.*;
 
 public class Main
 {
     public static void main(String[] args)
     {
-        checkJsonExists();
-    }
+        Scanner console = new Scanner(System.in);
+        JSONObject questionFile;
+        JSONArray questionList;
 
-    public static void writeJsonFile(JSONObject obj) throws IOException
-    {
-        FileWriter file = new FileWriter("questions.json");
-        file.write(obj.toJSONString());
-        file.flush();
-        file.close();
-    }
+        JSONUtils.checkJsonExists();
 
-    public static JSONObject questionBuilder(Integer id, String question, Integer correctChoice, List<String> choices, List<String> comments)
-    {
-        JSONObject obj = new JSONObject();
-        JSONArray choiceArray = new JSONArray();
-        JSONArray commentArray = new JSONArray();
-        Integer iteratorCount = 0;
-
-        obj.put("id", id);
-        obj.put("question", question);
-        obj.put("correctChoice", correctChoice);
-
-        for (String choiceString : choices)
-        {
-            JSONObject choice = new JSONObject();
-            choice.put("choice" + iteratorCount, choiceString);
-            choiceArray.add(choice);
-            iteratorCount++;
-        }
-
-        iteratorCount = 0;
-        for (String commentString : comments)
-        {
-            JSONObject comment = new JSONObject();
-            comment.put("comment" + iteratorCount, commentString);
-            commentArray.add(comment);
-            iteratorCount++;
-        }
-
-        obj.put("choices", choiceArray);
-        obj.put("comments", commentArray);
-
-        return obj;
-    }
-    public static void checkJsonExists()
-    {
         try
         {
-            Reader reader = new FileReader("questions.json");
+            questionFile = JSONUtils.readJsonFile();
         }
-        catch (IOException ignoredError)
+        catch (IOException | ParseException e)
         {
-            System.out.println("Questions file not found, creating a new one");
+            //TODO: try to load json again?
+            throw new RuntimeException(e);
+        }
 
-            JSONObject defaultQuestions = new JSONObject();
-            JSONArray defaultQuestionArray = new JSONArray();
+        questionList = (JSONArray) questionFile.get("questions");
 
-            defaultQuestionArray.add(questionBuilder(0, "Question0", 0,
-                    Arrays.asList("Choice0", "Choice1", "Choice2"),
-                    Arrays.asList("Comment0", "Comment1", "Comment2")));
-            defaultQuestionArray.add(questionBuilder(1, "Question1", 0,
-                    Arrays.asList("Choice0", "Choice1", "Choice2"),
-                    Arrays.asList("Comment0", "Comment1", "Comment2")));
-            defaultQuestionArray.add(questionBuilder(2, "Question2", 0,
-                    Arrays.asList("Choice0", "Choice1", "Choice2"),
-                    Arrays.asList("Comment0", "Comment1", "Comment2")));
+        System.out.println("jay's over-engineered quiz app");
+        System.out.println("what would you like to do?");
+        System.out.println("PLAY | CREATE | VIEW");
 
-            defaultQuestions.put("questions", defaultQuestionArray);
+        while(true)
+        {
+            String response = console.nextLine();
+            response = response.toUpperCase();
 
+            if (response.equals("PLAY"))
+            {
+                Integer questionCount = questionList.size();
+
+                System.out.println("You have chosen to PLAY a quiz");
+                System.out.println("You have " + questionCount + " questions currently available.");
+                System.out.println("Choose how many questions to play, between 1 and " + questionCount);
+
+                Integer playCount = inputProtectedInteger(console, 1, questionCount);
+
+                System.out.println("Alright, playing for " + playCount + " questions!");
+
+            }
+            else if (response.equals("CREATE"))
+            {
+
+            }
+            else if (response.equals("VIEW"))
+            {
+
+            }
+        }
+    }
+
+    public static Integer inputProtectedInteger(Scanner console, int lowerBound, int upperBound)
+    {
+        while (true)
+        {
+            String input = console.nextLine();
+            if (input == null)
+            {
+                System.out.println("Your input was invalid; try again.");
+                continue;
+            }
             try
             {
-                writeJsonFile(defaultQuestions);
+                int integerInput = Integer.parseInt(input);
+                if (integerInput < lowerBound || integerInput > upperBound)
+                {
+                    System.out.println("Your input was outside of the allowed bounds (" + lowerBound + ", " + upperBound + "); try again.");
+                    continue;
+                }
+                return integerInput;
             }
-            catch (IOException e)
+            catch (Exception e)
             {
+                System.out.println("Your input was invalid; try again. See error below:");
                 e.printStackTrace();
             }
-
-            System.out.print(defaultQuestions.toJSONString());
         }
     }
 }
