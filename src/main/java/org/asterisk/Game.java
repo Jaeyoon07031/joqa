@@ -19,9 +19,32 @@ public class Game
 
     public static void playGame(JSONArray questionsJSON)
     {
-        int questionCount = questionsJSON.size();
-
         System.out.println("You have chosen to PLAY a quiz");
+        for(;;)
+        {
+            System.out.println("Which quiz do you want to play?");
+            System.out.println("DEFAULT | CUSTOM");
+            String response = console.nextLine();
+            if (response.toUpperCase().equals("DEFAULT"))
+            {
+                playDefaultGame();
+            }
+            else if (response.toUpperCase().equals("CUSTOM"))
+            {
+                playCustomGame(questionsJSON);
+            }
+            else
+            {
+                System.out.println("That was not a valid choice. Try again: ");
+            }
+        }
+
+
+    }
+
+    private static void playCustomGame(JSONArray questionsJSON)
+    {
+        int questionCount = questionsJSON.size();
         System.out.println("You have " + questionCount + " questions currently available.");
 
         Integer playCount = InputUtils.inputProtectedInteger("Choose how many questions to play, between 1 and " + questionCount,
@@ -93,5 +116,10 @@ public class Game
         }
 
         System.out.println("Total Score: " + correct + " / " + (correct + incorrect));
+    }
+
+    private static void playDefaultGame()
+    {
+
     }
 }

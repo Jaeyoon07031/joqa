@@ -11,7 +11,8 @@ import org.json.simple.parser.*;
 public class Main
 {
     //TODO: entire thing needs better error handling
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         Scanner console = new Scanner(System.in);
         Game.console = console;
         Editor.console = console;
