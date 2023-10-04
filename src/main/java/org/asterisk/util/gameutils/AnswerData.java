@@ -2,14 +2,14 @@ package org.asterisk.util.gameutils;
 
 public class AnswerData
 {
-    private Integer questionId;
+    private int questionId;
     private boolean answerCorrect;
-    private Integer givenAnswer;
-    private Integer correctChoice;
-    private Integer problemWeight;
+    private int givenAnswer;
+    private int correctChoice;
+    private int problemWeight;
     //TODO: am i going to use problemWeight or not lol
 
-    public AnswerData(Integer questionId, boolean answerCorrect, Integer givenAnswer, Integer correctAnswer)
+    public AnswerData(int questionId, boolean answerCorrect, int givenAnswer, int correctAnswer)
     {
         this.questionId = questionId;
         this.answerCorrect = answerCorrect;
@@ -17,7 +17,7 @@ public class AnswerData
         this.correctChoice = correctAnswer;
     }
 
-    public AnswerData(Integer questionId, boolean answerCorrect, Integer givenAnswer, Integer correctAnswer, Integer problemWeight)
+    public AnswerData(int questionId, boolean answerCorrect, int givenAnswer, int correctAnswer, int problemWeight)
     {
         this.questionId = questionId;
         this.answerCorrect = answerCorrect;
@@ -26,7 +26,7 @@ public class AnswerData
         this.problemWeight = problemWeight;
     }
 
-    public Integer getQuestionId()
+    public int getQuestionId()
     {
         return questionId;
     }
@@ -36,17 +36,17 @@ public class AnswerData
         return answerCorrect;
     }
 
-    public Integer getGivenAnswer()
+    public int getGivenAnswer()
     {
         return givenAnswer;
     }
 
-    public Integer getCorrectChoice()
+    public int getCorrectChoice()
     {
         return correctChoice;
     }
 
-    public Integer getProblemWeight()
+    public int getProblemWeight()
     {
         return problemWeight;
     }

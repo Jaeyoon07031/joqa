@@ -12,21 +12,18 @@ Questions JSON Format
 [
     {
         "id": Integer,
-        "question": String,
         "correctChoice": Integer,
+        "question": String,
         "choices": [
-            "choice0": String,
-            "choice1": String,
-            "choice2": String
-        ],
-        "comments": [
-            "comment0": String,
-            "comment1": String,
-            "comment2": String
+            {"choice0": String},
+            {"choice1": String},
+            {"choice2": String}
         ]
     }
 ]
  */
+
+//TODO: change question id to longer, random hexadecimal?
 
 public class JSONUtils
 {
@@ -47,16 +44,15 @@ public class JSONUtils
         return (JSONObject) obj;
     }
 
-    public static JSONObject questionBuilder(Integer id, String question, Integer correctChoice, List<String> choices, List<String> comments)
+    public static JSONObject questionBuilder(int id, Integer correctChoice, String question, List<String> choices)
     {
         JSONObject obj = new JSONObject();
         JSONArray choiceArray = new JSONArray();
-        JSONArray commentArray = new JSONArray();
         Integer iteratorCount = 0;
 
         obj.put("id", id);
-        obj.put("question", question);
         obj.put("correctChoice", correctChoice);
+        obj.put("question", question);
 
         for (String choiceString : choices)
         {
@@ -66,17 +62,7 @@ public class JSONUtils
             iteratorCount++;
         }
 
-        iteratorCount = 0;
-        for (String commentString : comments)
-        {
-            JSONObject comment = new JSONObject();
-            comment.put("comment" + iteratorCount, commentString);
-            commentArray.add(comment);
-            iteratorCount++;
-        }
-
         obj.put("choices", choiceArray);
-        obj.put("comments", commentArray);
 
         return obj;
     }
@@ -94,15 +80,12 @@ public class JSONUtils
             JSONObject defaultQuestions = new JSONObject();
             JSONArray defaultQuestionArray = new JSONArray();
 
-            defaultQuestionArray.add(questionBuilder(0, "Question0", 0,
-                    Arrays.asList("Choice0", "Choice1", "Choice2"),
-                    Arrays.asList("Comment0", "Comment1", "Comment2")));
-            defaultQuestionArray.add(questionBuilder(1, "Question1", 0,
-                    Arrays.asList("Choice0", "Choice1", "Choice2"),
-                    Arrays.asList("Comment0", "Comment1", "Comment2")));
-            defaultQuestionArray.add(questionBuilder(2, "Question2", 0,
-                    Arrays.asList("Choice0", "Choice1", "Choice2"),
-                    Arrays.asList("Comment0", "Comment1", "Comment2")));
+            defaultQuestionArray.add(questionBuilder(0, 0, "Question0",
+                    Arrays.asList("Choice0", "Choice1", "Choice2")));
+            defaultQuestionArray.add(questionBuilder(1, 0, "Question1",
+                    Arrays.asList("Choice0", "Choice1", "Choice2")));
+            defaultQuestionArray.add(questionBuilder(2, 0, "Question2",
+                    Arrays.asList("Choice0", "Choice1", "Choice2")));
 
             defaultQuestions.put("questions", defaultQuestionArray);
 

@@ -1,7 +1,7 @@
 package org.asterisk;
 
 import org.asterisk.util.InputUtils;
-import org.asterisk.util.gameutils. AnswerData;
+import org.asterisk.util.gameutils.AnswerData;
 
 import java.util.*;
 
@@ -19,7 +19,7 @@ public class Game
 
     public static void playGame(JSONArray questionsJSON)
     {
-        Integer questionCount = questionsJSON.size();
+        int questionCount = questionsJSON.size();
 
         System.out.println("You have chosen to PLAY a quiz");
         System.out.println("You have " + questionCount + " questions currently available.");
@@ -38,17 +38,15 @@ public class Game
         {
             JSONObject question = (JSONObject)questionObject;
             JSONArray choices = (JSONArray)question.get("choices");
-            JSONArray comments = (JSONArray)question.get("comments");
-            List<String> commentList = new ArrayList<>();
 
-            Integer questionId = Integer.parseInt(question.get("id").toString());
-            Integer correctChoice = Integer.parseInt(question.get("correctChoice").toString());
+            int questionId = Integer.parseInt(question.get("id").toString());
+            int correctChoice = Integer.parseInt(question.get("correctChoice").toString());
             boolean choiceCorrect;
 
             System.out.println("Question ID: " + questionId);
             System.out.println("Question: " + question.get("question"));
 
-            Integer iteratorCount = 0;
+            int iteratorCount = 0;
             for (Object choiceObject : choices)
             {
                 JSONObject choice = (JSONObject)choiceObject;
@@ -56,18 +54,10 @@ public class Game
                 iteratorCount++;
             }
 
-            iteratorCount = 0;
-            for (Object commentObject : comments)
-            {
-                JSONObject comment = (JSONObject)commentObject;
-                commentList.add(comment.get("comment" + iteratorCount).toString());
-                iteratorCount++;
-            }
+            int response = InputUtils.inputProtectedInteger("What is your choice? Answer with the choice's number, which is between 0 and " + (choices.size() - 1),
+                    console, 0, choices.size() - 1);
 
-            Integer response = InputUtils.inputProtectedInteger("What is your choice? Answer with the choice's number.",
-                    console, 0, choices.size());
-
-            choiceCorrect = response.equals(Integer.parseInt(correctChoice.toString()));
+            choiceCorrect = (correctChoice == response);
 
             if (choiceCorrect)
             {
@@ -77,8 +67,6 @@ public class Game
             {
                 System.out.println("Not quite the correct choice.");
             }
-
-            System.out.println("Comment: " + commentList.get(response));
 
             scoreTracker.add(new AnswerData(questionId, choiceCorrect, response, correctChoice));
         }
@@ -104,6 +92,6 @@ public class Game
             }
         }
 
-        System.out.println("Total Score: " + correct + " / " + correct + incorrect);
+        System.out.println("Total Score: " + correct + " / " + (correct + incorrect));
     }
 }

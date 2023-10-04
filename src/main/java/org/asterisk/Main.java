@@ -10,10 +10,12 @@ import org.json.simple.parser.*;
 
 public class Main
 {
-    public static void main(String[] args)
-    {
+    //TODO: entire thing needs better error handling
+    public static void main(String[] args) {
         Scanner console = new Scanner(System.in);
         Game.console = console;
+        Editor.console = console;
+
         JSONObject questionFile;
         JSONArray questionList;
 
@@ -47,7 +49,19 @@ public class Main
             }
             else if (response.equals("CREATE"))
             {
-                Editor.createQuestion();
+                JSONObject newFile = Editor.addQuestion(questionList);
+
+                try
+                {
+                    JSONUtils.writeJsonFile(newFile);
+                }
+                catch (IOException e)
+                {
+                    //TODO: do something better please future me i trust you
+                    throw new RuntimeException(e);
+                }
+
+                questionList = (JSONArray) newFile.get("questions");
             }
             else if (response.equals("EDIT"))
             {
@@ -57,6 +71,10 @@ public class Main
             {
                 break;
                 //TODO: change this so reynolds doesnt yell at me again
+            }
+            else
+            {
+                System.out.println("Not a valid choice. Try again:");
             }
         }
     }
