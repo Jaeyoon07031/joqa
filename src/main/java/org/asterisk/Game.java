@@ -2,6 +2,7 @@ package org.asterisk;
 
 import org.asterisk.util.InputUtils;
 import org.asterisk.util.gameutils.AnswerData;
+import org.asterisk.util.gameutils.fallbackgame.*;
 
 import java.util.*;
 
@@ -9,15 +10,14 @@ import org.json.simple.*;
 
 public class Game
 {
-    public static Scanner console;
-    //TODO: change to private and instantiate Game in Main?
+    private final Scanner console;
 
     public Game(Scanner console)
     {
-        Game.console = console;
+        this.console = console;
     }
 
-    public static void playGame(JSONArray questionsJSON)
+    public void playGame(JSONArray questionsJSON)
     {
         System.out.println("You have chosen to PLAY a quiz");
         for(;;)
@@ -25,24 +25,24 @@ public class Game
             System.out.println("Which quiz do you want to play?");
             System.out.println("DEFAULT | CUSTOM");
             String response = console.nextLine();
-            if (response.toUpperCase().equals("DEFAULT"))
+            if (response.equalsIgnoreCase("DEFAULT"))
             {
                 playDefaultGame();
+                return;
             }
-            else if (response.toUpperCase().equals("CUSTOM"))
+            else if (response.equalsIgnoreCase("CUSTOM"))
             {
                 playCustomGame(questionsJSON);
+                return;
             }
             else
             {
                 System.out.println("That was not a valid choice. Try again: ");
             }
         }
-
-
     }
 
-    private static void playCustomGame(JSONArray questionsJSON)
+    private void playCustomGame(JSONArray questionsJSON)
     {
         int questionCount = questionsJSON.size();
         System.out.println("You have " + questionCount + " questions currently available.");
@@ -94,6 +94,43 @@ public class Game
             scoreTracker.add(new AnswerData(questionId, choiceCorrect, response, correctChoice));
         }
 
+        printScoreBoard(scoreTracker);
+    }
+
+    private void playDefaultGame()
+    {
+        System.out.println("You have opted to play the default questions!");
+        System.out.println("There are 5 default questions available");
+        System.out.println("Starting now!");
+
+        List<AnswerData> scoreTracker = new ArrayList<>();
+        List<String> defaultQuestionList = Arrays.asList("FirstDefaultQuestion", "SecondDefaultQuestion", "ThirdDefaultQuestion", "FourthDefaultQuestion", "FifthDefaultQuestion");
+        Collections.shuffle(defaultQuestionList);
+
+        for (String defaultQuestion : defaultQuestionList)
+        {
+            DefaultQuestion question = DefaultQuestionFactory.getDefaultQuestion(defaultQuestion);
+
+            int response = question.askQuestion(console);
+            boolean choiceCorrect = (question.getCorrectChoice() == response);
+
+            if (choiceCorrect)
+            {
+                System.out.println("You got the correct choice!");
+            }
+            else
+            {
+                System.out.println("Not quite the correct choice.");
+            }
+
+            scoreTracker.add(new AnswerData(question.getQuestionId(), choiceCorrect, response, question.getCorrectChoice()));
+        }
+
+        printScoreBoard(scoreTracker);
+    }
+
+    private void printScoreBoard(List<AnswerData> scoreTracker)
+    {
         System.out.println("Quiz Over!");
         System.out.println("Your results:");
         System.out.println(" QID | YOU | COR | RES");
@@ -116,10 +153,5 @@ public class Game
         }
 
         System.out.println("Total Score: " + correct + " / " + (correct + incorrect));
-    }
-
-    private static void playDefaultGame()
-    {
-
     }
 }

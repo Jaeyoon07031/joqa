@@ -11,11 +11,12 @@ import org.json.simple.parser.*;
 public class Main
 {
     //TODO: entire thing needs better error handling
+    //TODO: change indexing to be user-friendly
     public static void main(String[] args)
     {
         Scanner console = new Scanner(System.in);
-        Game.console = console;
-        Editor.console = console;
+        Game game = new Game(console);
+        Editor editor = new Editor(console);
 
         JSONObject questionFile;
         JSONArray questionList;
@@ -28,7 +29,6 @@ public class Main
         }
         catch (IOException | ParseException e)
         {
-            //TODO: try to load json again?
             throw new RuntimeException(e);
         }
 
@@ -42,15 +42,14 @@ public class Main
             System.out.println("PLAY | CREATE | EDIT | EXIT");
 
             String response = console.nextLine();
-            response = response.toUpperCase();
 
-            if (response.equals("PLAY"))
+            if (response.equalsIgnoreCase("PLAY"))
             {
-                Game.playGame(questionList);
+                game.playGame(questionList);
             }
-            else if (response.equals("CREATE"))
+            else if (response.equalsIgnoreCase("CREATE"))
             {
-                JSONObject newFile = Editor.addQuestion(questionList);
+                JSONObject newFile = editor.addQuestion(questionList);
 
                 try
                 {
@@ -58,20 +57,19 @@ public class Main
                 }
                 catch (IOException e)
                 {
-                    //TODO: do something better please future me i trust you
                     throw new RuntimeException(e);
                 }
 
                 questionList = (JSONArray) newFile.get("questions");
             }
-            else if (response.equals("EDIT"))
+            else if (response.equalsIgnoreCase("EDIT"))
             {
-                Editor.openEditor();
+                editor.openEditor();
             }
-            else if (response.equals("EXIT"))
+            else if (response.equalsIgnoreCase("EXIT"))
             {
-                break;
-                //TODO: change this so reynolds doesnt yell at me again
+                System.out.println("Thanks for playing!");
+                return;
             }
             else
             {

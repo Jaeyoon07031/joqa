@@ -2,28 +2,24 @@ package org.asterisk;
 
 import org.asterisk.util.*;
 
-import java.io.*;
 import java.util.*;
 
 import org.json.simple.*;
-import org.json.simple.parser.*;
-
 
 public class Editor
 {
-    public static Scanner console;
-    //TODO: change to private and instantiate Game in Main?
+    private final Scanner console;
 
     public Editor(Scanner console)
     {
-        Editor.console = console;
+        this.console = console;
     }
 
-    public static JSONObject addQuestion(JSONArray questionList)
+    public JSONObject addQuestion(JSONArray questionList)
     {
         JSONObject finalFile = new JSONObject();
         JSONObject newQuestion;
-        List<String> choiceTexts = new ArrayList<String>();
+        List<String> choiceTexts = new ArrayList<>();
 
         System.out.println("You have chosen to make a new question!");
         System.out.println("Type your question below: ");
@@ -52,7 +48,7 @@ public class Editor
         return finalFile;
     }
 
-    public static void openEditor()
+    public void openEditor()
     {
 
     }
