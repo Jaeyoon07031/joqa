@@ -35,5 +35,5 @@ why
 
 ### License(s)
 JOQA is distributed under the MIT license.
-The one library I do use (googlecode simple-json) is distributed under the Apache-2.0 License.
+The one library I do use (googlecode json-simple) is distributed under the Apache-2.0 License.
 Both of these can be found in `LICENSE.txt` or [here](https://opensource.org/license/mit/) and [here](https://www.apache.org/licenses/LICENSE-2.0).
