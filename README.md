@@ -22,7 +22,7 @@ If you prefer to compile from source, the instructions are [below](#Building-The
 2. Verify with `mvn --version` that you meet the prerequisites
 3. Run `mvn compile` then `mvn package` to build the project
 4. The executable jar can then be found in the `target` directory
-5. Run as `java -jar target/JAR_NAME_HERE.jar`
+5. Run as `java -jar target\JAR_NAME_HERE.jar`
 ##### Building on Windows, Easy Mode*
 1. Download the repo as a .zip file and extract it somewhere
 2. Open the whole folder as a project in IntelliJ IDEA
