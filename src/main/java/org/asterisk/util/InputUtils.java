@@ -27,8 +27,7 @@ public class InputUtils
             }
             catch (Exception e)
             {
-                System.out.println("Your input was invalid; try again. See error below:");
-                e.printStackTrace();
+                System.out.println("Your input was invalid; try again.");
             }
         }
     }

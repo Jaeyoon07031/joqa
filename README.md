@@ -4,7 +4,7 @@
 ![i wasted so much time on this](https://img.shields.io/badge/time_wasted-5_hours_and_counting-purple)
 ![why would you pr for this](https://img.shields.io/badge/pull_requests-if_you_want-mediumaquamarine)
 
-Jay's Over-engineered Quiz App (JOQA) is an over-engineered Java app for writing and playing quizzes.
+Jay's Over-engineered Quiz App (JOQA) is an over-engineered Java app for writing and playing simple quizzes.
 
 I have no idea why I spent so much time on an AP Comp Sci project, but at least I know I had some fun doing it.
 

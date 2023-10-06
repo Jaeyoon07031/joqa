@@ -73,14 +73,14 @@ public class Game
             for (Object choiceObject : choices)
             {
                 JSONObject choice = (JSONObject)choiceObject;
-                System.out.println("Choice " + iteratorCount  + ": " + choice.get("choice" + iteratorCount));
+                System.out.println("Choice " + (iteratorCount + 1)  + ": " + choice.get("choice" + iteratorCount));
                 iteratorCount++;
             }
 
-            int response = InputUtils.inputProtectedInteger("What is your choice? Answer with the choice's number, which is between 0 and " + (choices.size() - 1),
-                    console, 0, choices.size() - 1);
+            int response = InputUtils.inputProtectedInteger("What is your choice? Answer with the choice's number, which is between 1 and " + choices.size(),
+                    console, 1, choices.size());
 
-            choiceCorrect = (correctChoice == response);
+            choiceCorrect = (correctChoice == (response - 1));
 
             if (choiceCorrect)
             {
@@ -112,7 +112,7 @@ public class Game
             DefaultQuestion question = DefaultQuestionFactory.getDefaultQuestion(defaultQuestion);
 
             int response = question.askQuestion(console);
-            boolean choiceCorrect = (question.getCorrectChoice() == response);
+            boolean choiceCorrect = (question.getCorrectChoice() == (response - 1));
 
             if (choiceCorrect)
             {
@@ -139,7 +139,7 @@ public class Game
         Integer incorrect = 0;
         for (AnswerData answer : scoreTracker)
         {
-            System.out.print("  " + answer.getQuestionId() + "  |  " + answer.getGivenAnswer() + "  |  " + answer.getCorrectChoice() + "  |  ");
+            System.out.print("  " + answer.getQuestionId() + "  |  " + answer.getGivenAnswer() + "  |  " + (answer.getCorrectChoice() + 1) + "  |  ");
             if (answer.getAnswerCorrectness())
             {
                 System.out.println("O");

@@ -7,11 +7,12 @@ import java.util.*;
 public class FirstDefaultQuestion implements DefaultQuestion
 {
     private final int questionId = 0;
-    private final int correctChoice = 0;
-    private final String question = "hello";
-    private final List<String> choices = Arrays.asList("Choice0",
-            "Choice1",
-            "Choice2");
+    private final int correctChoice = 3;
+    private final String question = "What is the theoretical limit to the number of custom questions in this program while remaining playable?";
+    private final List<String> choices = Arrays.asList("Unlimited",
+            "2^63 - 1",
+            "2^32 - 1",
+            "2^31 - 1");
 
     @Override
     public int askQuestion(Scanner console)
@@ -22,12 +23,12 @@ public class FirstDefaultQuestion implements DefaultQuestion
         int iteratorCount = 0;
         for (String choiceObject : choices)
         {
-            System.out.println("Choice " + iteratorCount  + ": " + choiceObject);
+            System.out.println("Choice " + (iteratorCount + 1)  + ": " + choiceObject);
             iteratorCount++;
         }
 
-        return InputUtils.inputProtectedInteger("What is your choice? Answer with the choice's number, which is between 0 and " + (choices.size() - 1),
-                console, 0, choices.size() - 1);
+        return InputUtils.inputProtectedInteger("What is your choice? Answer with the choice's number, which is between 1 and " + choices.size(),
+                console, 1, choices.size());
     }
 
     @Override

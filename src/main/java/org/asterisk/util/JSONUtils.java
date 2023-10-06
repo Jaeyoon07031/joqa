@@ -75,17 +75,19 @@ public class JSONUtils
         }
         catch (IOException ignoredError)
         {
-            System.out.println("Questions file not found, creating a default one");
+            System.out.println("Custom questions file not found, creating a default one");
 
             JSONObject defaultQuestions = new JSONObject();
             JSONArray defaultQuestionArray = new JSONArray();
 
-            defaultQuestionArray.add(questionBuilder(0, 0, "Question0",
-                    Arrays.asList("Choice0", "Choice1", "Choice2")));
-            defaultQuestionArray.add(questionBuilder(1, 0, "Question1",
-                    Arrays.asList("Choice0", "Choice1", "Choice2")));
-            defaultQuestionArray.add(questionBuilder(2, 0, "Question2",
-                    Arrays.asList("Choice0", "Choice1", "Choice2")));
+            //TODO: make default questions actually useful???? (might make it a self-learning tutorial)
+
+            defaultQuestionArray.add(questionBuilder(0, 1, "How much time did the author waste writing this?",
+                    Arrays.asList("3 hours", "5 hours", "More than the above")));
+            defaultQuestionArray.add(questionBuilder(1, 2, "How much trouble are you in if you don't properly list the licenses for libraries you use",
+                    Arrays.asList("Straight to Jail", "No one cares", "Don't Know")));
+            defaultQuestionArray.add(questionBuilder(2, 0, "How difficult is it to actually make good, meaningful questions for this?",
+                    Arrays.asList("Incredibly", "Somewhat", "Not at all")));
 
             defaultQuestions.put("questions", defaultQuestionArray);
 

@@ -39,17 +39,12 @@ public class Editor
         }
 
         int correctChoice = InputUtils.inputProtectedInteger("Which number choice should be the correct one? Enter a number between 0 and " + (choiceCount - 1),
-                console, 1, choiceCount);
+                console, 0, choiceCount - 1);
 
         newQuestion = JSONUtils.questionBuilder(questionList.size(), correctChoice, question, choiceTexts);
         questionList.add(newQuestion);
         finalFile.put("questions", questionList);
 
         return finalFile;
-    }
-
-    public void openEditor()
-    {
-
     }
 }

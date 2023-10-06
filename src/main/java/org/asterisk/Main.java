@@ -10,8 +10,7 @@ import org.json.simple.parser.*;
 
 public class Main
 {
-    //TODO: entire thing needs better error handling
-    //TODO: change indexing to be user-friendly
+    //TODO: fix cursed indexing (displayed and inputted indices are one higher than internal)
     public static void main(String[] args)
     {
         Scanner console = new Scanner(System.in);
@@ -39,7 +38,7 @@ public class Main
         for(;;)
         {
             System.out.println("what would you like to do?");
-            System.out.println("PLAY | CREATE | EDIT | EXIT");
+            System.out.println("PLAY | CREATE | EXIT");
 
             String response = console.nextLine();
 
@@ -61,10 +60,6 @@ public class Main
                 }
 
                 questionList = (JSONArray) newFile.get("questions");
-            }
-            else if (response.equalsIgnoreCase("EDIT"))
-            {
-                editor.openEditor();
             }
             else if (response.equalsIgnoreCase("EXIT"))
             {
