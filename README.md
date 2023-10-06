@@ -14,7 +14,7 @@ Pre-compiled binaries are available on the GitHub [releases page](https://github
 If you prefer to compile from source, the instructions are [below](#Building-The-Project) 
 ### Building The Project
 ##### Prerequisites
-- Maven 3.3.x or higher
+- Maven 3.8.x or higher, might work with 3.6.x+ but not tested
 - JDK (of your choice) 17+, might work with 8+ but not tested 
 - A functioning brain
 ##### Building on Windows
