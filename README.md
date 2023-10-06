@@ -15,7 +15,7 @@ If you prefer to compile from source, the instructions are [below](#Building-The
 ### Building The Project
 ##### Prerequisites
 - Maven 3.2.5+ required, 3.8.x+ recommended
-- Java 8+ required, 17+ recommended
+- Java runtime 17+ required
 - A functioning brain
 ##### Building on Windows
 1. Navigate to the root directory of the downloaded repo (The folder with the pom.xml file)
